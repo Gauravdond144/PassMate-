@@ -1,0 +1,137 @@
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #181818;
+  color: white;
+  height: 100vh;
+}
+
+/* Sidebar */
+.p-4.w-64.bg-gray-800 {
+  width: 240px;
+  background-color: #222;
+  padding: 16px;
+  position: fixed;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease;
+}
+
+.p-4.w-64.bg-gray-800.hidden {
+  transform: translateX(-100%);
+}
+
+.p-4.w-64.bg-gray-800 .flex.items-center.gap-3.text-lg.font-semibold {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 32px;
+}
+
+.p-4.w-64.bg-gray-800 nav .flex.items-center.gap-3.p-2.rounded.hover\:bg-gray-700.cursor-pointer {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border-radius: 8px;
+  gap: 12px;
+  cursor: pointer;
+  font-size: 18px;
+  color: white;
+}
+
+.p-4.w-64.bg-gray-800 nav .flex.items-center.gap-3.p-2.rounded.hover\:bg-gray-700.cursor-pointer:hover {
+  background-color: #333;
+}
+
+.p-4.w-64.bg-gray-800 nav .flex.items-center.gap-3.p-2.rounded.hover\:bg-gray-700.cursor-pointer svg {
+  font-size: 20px;
+}
+
+/* Main Content */
+.flex-1.flex.flex-col {
+  margin-left: 240px;
+  padding: 24px;
+  overflow-y: auto;
+  transition: margin-left 0.3s ease;
+}
+
+.flex-1.flex.flex-col .flex.justify-between.items-center.p-4.bg-gray-800 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #222;
+  padding: 16px 24px;
+  border-bottom: 1px solid #333;
+}
+
+.flex-1.flex.flex-col .flex.justify-between.items-center.p-4.bg-gray-800 .flex.bg-gray-700.p-2.rounded-lg.items-center.w-1\/2 {
+  display: flex;
+  align-items: center;
+  background-color: #333;
+  padding: 8px 12px;
+  border-radius: 16px;
+  width: 50%;
+}
+
+.flex-1.flex.flex-col .flex.justify-between.items-center.p-4.bg-gray-800 .flex.bg-gray-700.p-2.rounded-lg.items-center.w-1\/2 input {
+  background-color: transparent;
+  border: none;
+  color: white;
+  width: 100%;
+  padding-left: 8px;
+}
+
+.flex-1.flex.flex-col .flex.justify-between.items-center.p-4.bg-gray-800 .flex.bg-gray-700.p-2.rounded-lg.items-center.w-1\/2 svg {
+  font-size: 20px;
+}
+
+.flex-1.flex.flex-col .flex.justify-between.items-center.p-4.bg-gray-800 .text-2xl.cursor-pointer {
+  font-size: 28px;
+  cursor: pointer;
+}
+
+/* Video Grid */
+.grid.grid-cols-1.md\:grid-cols-3.gap-4.p-4 {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+  padding: 20px 0;
+}
+
+.grid.grid-cols-1.md\:grid-cols-3.gap-4.p-4 .bg-gray-800.p-2.rounded-lg.cursor-pointer {
+  background-color: #222;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.grid.grid-cols-1.md\:grid-cols-3.gap-4.p-4 .bg-gray-800.p-2.rounded-lg.cursor-pointer img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.grid.grid-cols-1.md\:grid-cols-3.gap-4.p-4 .bg-gray-800.p-2.rounded-lg.cursor-pointer:hover {
+  transform: scale(1.05);
+}
+
+.grid.grid-cols-1.md\:grid-cols-3.gap-4.p-4 .bg-gray-800.p-2.rounded-lg.cursor-pointer .mt-2.font-semibold {
+  font-weight: 500;
+  margin-top: 12px;
+}
+
+.grid.grid-cols-1.md\:grid-cols-3.gap-4.p-4 .bg-gray-800.p-2.rounded-lg.cursor-pointer .text-gray-400.text-sm {
+  color: #aaa;
+  font-size: 14px;
+  margin-top: 8px;
+}
