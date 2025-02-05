@@ -10,6 +10,9 @@ function App() {
     <>
     <Navbar></Navbar>
     <ShowQNA></ShowQNA>
+    <ShowQNA></ShowQNA>
+    <ShowQNA></ShowQNA>
+    <ShowQNA></ShowQNA>
     </>
   )
 }
