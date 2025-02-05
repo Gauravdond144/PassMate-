@@ -1,13 +1,17 @@
 import { useState } from 'react'
-// import './App.css'
-import Navbar from './Components/Navbar'    
+import Navbar from './components/Navbar'
+import ShowQNA from './components/ShowQNA'
+
 
 function App() {
+  const [count, setCount] = useState(0)
+
   return (
- <>
- <Navbar></Navbar>
- </>
-  );
+    <>
+    <Navbar></Navbar>
+    <ShowQNA></ShowQNA>
+    </>
+  )
 }
 
 export default App
