@@ -6,7 +6,7 @@ const ShowQNA = () => {
   // Sample data - in a real app, this would come from props or an API
   const questionData = {
     title: "How to implement authentication in React?",
-    content: "I'm building a React application and need to implement user authentication. What's the best approach to handle this? Should I use JWT tokens or session-based auth?",
+    content: "I'm building a  to handle this? Should I use JWT tokens or session-based auth?",
     author: "John Doe",
     timestamp: "2 hours ago",
     votes: 42,
@@ -17,7 +17,7 @@ const ShowQNA = () => {
   const answersData = [
     {
       id: 1,
-      content: "For React applications, JWT (JSON Web Tokens) is a popular choice. Here's a basic implementation: 1) First, set up your authentication endpoints on the backend. 2) Use axios or fetch to make API calls. 3) Store the JWT token in localStorage or httpOnly cookies. 4) Create a context to manage auth state globally.",
+      content: "For React applicat Store the JWT token in localStorage or httpOnly cookies. 4) Create a context to manage auth state globally.",
       author: "Jane Smith",
       timestamp: "1 hour ago",
       votes: 15,
@@ -43,14 +43,14 @@ const ShowQNA = () => {
 
   return (
     <div className="w-full md:w-4/5 mx-auto px-4 py-6">
-      <Question questionData={questionData} />
-      <div className="mt-6">
+      <Question></Question>
+       <div className="mt-6"> 
         <h3 className="text-xl font-semibold text-gray-900 mb-4">
           {answersData.length} Answers
         </h3>
         <Answer answers={answersData} />
-      </div>
-    </div>
+     </div>
+     </div> 
   );
 };
 
