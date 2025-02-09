@@ -1,8 +1,6 @@
 import { useState } from 'react'
 import Navbar from './components/Navbar'
 import ShowQNA from './components/ShowQNA'
-
-
 function App() {
   const [count, setCount] = useState(0)
 

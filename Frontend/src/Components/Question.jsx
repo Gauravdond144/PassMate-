@@ -8,7 +8,7 @@ const Question = ({ questionData }) => {
         {/* Voting Section */}
         <div className="flex flex-col items-center space-y-2">
           <button className="p-1 hover:bg-gray-100 rounded">
-            <ThumbsUp className="h-5 w-5 text-gray-500" />
+            <ThumbsUp className="h-5 w-5 text-gray-500"  />
           </button>
           <span className="text-sm font-medium text-gray-700">{questionData.votes}</span>
           <button className="p-1 hover:bg-gray-100 rounded">
