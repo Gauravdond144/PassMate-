@@ -3,6 +3,7 @@ const cors = require("cors");
 const connectDB = require("./config/db");
 const path = require("path");
 const myroutes = require("./Routes/myroutes");
+const BranchModel = require("./Models/BranchModel");
 require("dotenv").config();
 
 const app = express();
@@ -11,7 +12,16 @@ app.use(cors());
 app.use(express.json());
 
 connectDB();
-
+// async function addBranch() {
+//   const newBranch = new BranchModel({
+//     name: "Computer",
+//     code: "cs",
+//   });
+//   await newBranch.save();
+//   console.log("Brach Created:", newBranch);
+// }
+// addBranch();
+// addBranch();
 app.use(myroutes);
 
 const PORT = process.env.PORT || 3000;
