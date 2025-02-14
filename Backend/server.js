@@ -7,7 +7,7 @@ const BranchModel = require("./Models/BranchModel");
 require("dotenv").config();
 
 const app = express();
-
+// checking push on github
 app.use(cors());
 app.use(express.json());
 
