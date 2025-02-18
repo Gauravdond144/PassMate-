@@ -12,15 +12,13 @@ const qnaschema = new mongoose.Schema({
     },
     author: {
       type: String,
+      default: "anonymous",
     },
     votes: {
       type: Number,
       default: 0,
     },
-    answers: {
-      type: Number,
-      default: 0,
-    },
+
     tags: {
       type: [String],
       default: [],
@@ -39,8 +37,9 @@ const qnaschema = new mongoose.Schema({
     },
   ],
   subject: {
-    type: mongoose.Schema.Types.ObjectId,
-    ret: "subject",
+    type: String,
+    // type: mongoose.Schema.Types.ObjectId,
+    // ret: "subject",
     required: true,
   },
   unit: Number,

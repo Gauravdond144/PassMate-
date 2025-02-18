@@ -11,6 +11,6 @@ const branchSchema = new mongoose.Schema({
     unique: true,
   },
 });
-branchSchema.index({ code: 1 }, { unique: true });
+// branchSchema.index({ code: 1 }, { unique: true });
 
 module.exports = mongoose.model("branch", branchSchema);

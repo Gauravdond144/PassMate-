@@ -7,9 +7,9 @@ const BranchModel = require("./Models/BranchModel");
 require("dotenv").config();
 
 const app = express();
-// checking push on github
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 connectDB();
 // async function addBranch() {
@@ -22,7 +22,7 @@ connectDB();
 // }
 // addBranch();
 // addBranch();
-app.use(myroutes);
+app.use("/api", myroutes);
 
 const PORT = process.env.PORT || 3000;
 

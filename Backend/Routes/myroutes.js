@@ -1,7 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const { getData } = require("../controllers/Qcontroller");
+const { getData, setData } = require("../controllers/Qcontroller");
 
-router.get("/data", getData);
+router.get("/items", getData);
+
+router.post("/questions", setData);
 
 module.exports = router;

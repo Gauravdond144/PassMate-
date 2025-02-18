@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import Addanswer from './Addanswer.jsx';
 
 const AddQNA = () => {
   // Question Form State
-  const [questionData, setQuestionData] = useState({
+  const [queData, setqueData] = useState({
     title: '',
     content: '',
     author: '',
@@ -12,7 +13,7 @@ const AddQNA = () => {
   });
 
   // Answer Form State
-  const [answerData, setAnswerData] = useState({
+  const [ansData, setansData] = useState({
     content: '',
     author: '',
     isAccepted: false
@@ -25,28 +26,43 @@ const AddQNA = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+
+
   const handleQuestionSubmit = async (e) => {
     e.preventDefault();
+  
+
+    if (!queData.title.trim() || !queData.content.trim() || !queData.subject.trim() || !queData.unit) {
+      setError("Title, content, subject, and unit are required its important");
+      return;
+    }
     setIsSubmitting(true);
     setError('');
     setSuccess('');
-
     try {
-      const tagsArray = questionData.tags.split(',').map(tag => tag.trim()).filter(tag => tag);
-      
+      const tagsArray = queData.tags.split(',').map(tag => tag.trim()).filter(tag => tag);      
       const payload = {
         questionData: {
-          title: questionData.title,
-          content: questionData.content,
-          author: questionData.author,
+          title: queData.title,
+          content: queData.content,
+          author: queData.author || "anonymous",
+          votes:2,
           tags: tagsArray,
         },
-        subject: questionData.subject,
-        unit: parseInt(questionData.unit),
-        answersData: []
+      
+        answersData: [{
+          content: ansData.content,
+          author: ansData.author,
+          timestamp: new Date().toISOString(),
+          votes: 0,
+          isAccepted: ansData.isAccepted
+        }],
+        subject: queData.subject,
+        unit: parseInt(queData.unit,10),
       };
 
-      const response = await fetch('/api/questions', {
+
+      const response = await fetch('http://localhost:3000/api/questions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -54,9 +70,9 @@ const AddQNA = () => {
         body: JSON.stringify(payload),
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to submit question');
-      }
+      // if (!response.ok) {
+      //   throw new Error('Failed to submit question');
+      // }
 
       const result = await response.json();
       setQuestionId(result.data._id);
@@ -64,7 +80,7 @@ const AddQNA = () => {
       setShowAnswerOption(true);
       
       // Reset question form
-      setQuestionData({
+      setqueData({
         title: '',
         content: '',
         author: '',
@@ -72,53 +88,21 @@ const AddQNA = () => {
         unit: '',
         subject: ''
       });
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const handleAnswerSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setError('');
-
-    try {
-      const payload = {
-        content: answerData.content,
-        author: answerData.author,
-        timestamp: new Date().toISOString(),
-        votes: 0,
-        isAccepted: answerData.isAccepted
-      };
-
-      const response = await fetch(`/api/questions/${questionId}/answers`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to submit answer');
-      }
-
-      setSuccess('Answer submitted successfully!');
-      setAnswerData({
+      setansData({
         content: '',
         author: '',
         isAccepted: false
-      });
-      setKnowsAnswer(null);
-      setShowAnswerOption(false);
+      })
+
     } catch (err) {
       setError(err.message);
+      console.log(err);
     } finally {
       setIsSubmitting(false);
     }
   };
+
+
 
   return (
     <div className="max-w-2xl mx-auto p-4 space-y-6">
@@ -127,81 +111,62 @@ const AddQNA = () => {
         <h2 className="text-2xl font-bold mb-4">Ask a Question</h2>
         <form onSubmit={handleQuestionSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium mb-1">Title</label>
+            <label className="block text-sm font-medium mb-1">Question</label>
             <input
               type="text"
-              value={questionData.title}
-              onChange={(e) => setQuestionData(prev => ({...prev, title: e.target.value}))}
+              value={queData.title}
+              onChange={(e) => setqueData(prev => ({...prev, title: e.target.value}))}
               className="w-full px-3 py-2 border rounded-md"
               required
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">Content</label>
+            <label className="block text-sm font-medium mb-1">Description</label>
             <textarea
-              value={questionData.content}
-              onChange={(e) => setQuestionData(prev => ({...prev, content: e.target.value}))}
+              value={queData.content}
+              onChange={(e) => setqueData(prev => ({...prev, content: e.target.value}))}
               className="w-full px-3 py-2 border rounded-md min-h-[100px]"
               required
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium mb-1">Author</label>
-            <input
-              type="text"
-              value={questionData.author}
-              onChange={(e) => setQuestionData(prev => ({...prev, author: e.target.value}))}
-              className="w-full px-3 py-2 border rounded-md"
-            />
-          </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">Tags</label>
+            <label className="block text-sm font-medium mb-1">Concepts/Topics</label>
             <input
               type="text"
-              value={questionData.tags}
-              onChange={(e) => setQuestionData(prev => ({...prev, tags: e.target.value}))}
+              value={queData.tags}
+              onChange={(e) => setqueData(prev => ({...prev, tags: e.target.value}))}
               className="w-full px-3 py-2 border rounded-md"
               placeholder="Separate tags with commas"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">Unit Number</label>
+            <label className="block text-sm font-medium mb-1">Unit Number (optional)</label>
             <input
               type="number"
-              value={questionData.unit}
-              onChange={(e) => setQuestionData(prev => ({...prev, unit: e.target.value}))}
+              value={queData.unit}
+              onChange={(e) => setqueData(prev => ({...prev, unit: Number(e.target.value)}))}
               className="w-full px-3 py-2 border rounded-md"
               required
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">Subject ID</label>
+            <label className="block text-sm font-medium mb-1">Subject </label>
             <input
               type="text"
-              value={questionData.subject}
-              onChange={(e) => setQuestionData(prev => ({...prev, subject: e.target.value}))}
+              value={queData.subject}
+              onChange={(e) => setqueData(prev => ({...prev, subject: e.target.value}))}
               className="w-full px-3 py-2 border rounded-md"
               required
             />
           </div>
 
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 disabled:bg-blue-300"
-          >
-            {isSubmitting ? 'Submitting...' : 'Submit Question'}
-          </button>
-        </form>
-      </div>
-
-      {/* Answer Option */}
-      {showAnswerOption && (
+          {/* Answer Option */}
+     
         <div className="bg-white rounded-lg shadow p-6">
           <h3 className="text-lg font-medium mb-4">Do you know the answer to this question?</h3>
           <div className="space-x-4">
@@ -227,53 +192,25 @@ const AddQNA = () => {
             </label>
           </div>
         </div>
-      )}
 
-      {/* Answer Form */}
-      {knowsAnswer && (
-        <div className="bg-white rounded-lg shadow p-6">
-          <h2 className="text-2xl font-bold mb-4">Submit Your Answer</h2>
-          <form onSubmit={handleAnswerSubmit} className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium mb-1">Your Answer</label>
-              <textarea
-                value={answerData.content}
-                onChange={(e) => setAnswerData(prev => ({...prev, content: e.target.value}))}
-                className="w-full px-3 py-2 border rounded-md min-h-[150px]"
-                required
-              />
-            </div>
 
-            <div>
-              <label className="block text-sm font-medium mb-1">Your Name</label>
-              <input
-                type="text"
-                value={answerData.author}
-                onChange={(e) => setAnswerData(prev => ({...prev, author: e.target.value}))}
-                className="w-full px-3 py-2 border rounded-md"
-              />
-            </div>
+{/* Answer Form */}
+<Addanswer knowsAnswer={knowsAnswer} ansData={ansData}  isSubmitting={isSubmitting} setansData={setansData}></Addanswer>
 
-            <label className="inline-flex items-center">
-              <input
-                type="checkbox"
-                checked={answerData.isAccepted}
-                onChange={(e) => setAnswerData(prev => ({...prev, isAccepted: e.target.checked}))}
-                className="form-checkbox"
-              />
-              <span className="ml-2">Mark as accepted answer</span>
-            </label>
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 disabled:bg-blue-300"
+          >
+            {isSubmitting ? 'Submitting...' : 'Submit Question'}
+          </button>
+        </form>
+      </div>
 
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 disabled:bg-blue-300"
-            >
-              {isSubmitting ? 'Submitting...' : 'Submit Answer'}
-            </button>
-          </form>
-        </div>
-      )}
+      
+      
+
+      
 
       {/* Messages */}
       {error && (

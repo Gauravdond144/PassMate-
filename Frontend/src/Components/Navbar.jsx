@@ -34,9 +34,6 @@ const Navbar = () => {
           <div className="hidden md:flex items-center space-x-4">
             <a href="/" className="hover:text-gray-300">Home</a>
             <Link to="/addqna" className="hover:text-gray-300">Add Question</Link>
-            <a href="/disclaimer" className="hover:text-gray-300">Disclaimer</a>
-            <a href="/privacy" className="hover:text-gray-300">Privacy Policy</a>
-            <a href="/advertise" className="hover:text-gray-300">Advertise With Us</a>
             <a href="/contact" className="hover:text-gray-300">Contact</a>
           </div>
 
@@ -77,9 +74,6 @@ const Navbar = () => {
           <div className="px-2 pt-2 pb-3 space-y-1">
             <a href="/" className="block px-3 py-2 rounded-md hover:bg-blue-800">Home</a>
             <Link to="/addqna" className="block px-3 py-2 rounded-md hover:bg-blue-800">Add Question</Link>
-            <a href="/disclaimer" className="block px-3 py-2 rounded-md hover:bg-blue-800">Disclaimer</a>
-            <a href="/privacy" className="block px-3 py-2 rounded-md hover:bg-blue-800">Privacy Policy</a>
-            <a href="/advertise" className="block px-3 py-2 rounded-md hover:bg-blue-800">Advertise With Us</a>
             <a href="/contact" className="block px-3 py-2 rounded-md hover:bg-blue-800">Contact</a>
           </div>
         </div>
