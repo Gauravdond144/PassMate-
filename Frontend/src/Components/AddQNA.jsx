@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Addanswer from './Addanswer.jsx';
+import axios from 'axios';
 
 const AddQNA = () => {
   // Question Form State
@@ -26,13 +27,20 @@ const AddQNA = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [subjects , setSubjects] = useState([]);
+
+  useEffect(() => {
+    axios.get("http://localhost:3000/api/subjects")
+      .then((response) => setSubjects(response.data))
+      .catch((error) => console.error("Error fetching subjects:", error));
+  }, []);
 
 
   const handleQuestionSubmit = async (e) => {
     e.preventDefault();
   
 
-    if (!queData.title.trim() || !queData.content.trim() || !queData.subject.trim() || !queData.unit) {
+    if (!queData.title.trim() || !queData.content.trim() || !queData.subject.trim() || !queData.unit || !queData.subject) {
       setError("Title, content, subject, and unit are required its important");
       return;
     }
@@ -70,9 +78,9 @@ const AddQNA = () => {
         body: JSON.stringify(payload),
       });
 
-      // if (!response.ok) {
-      //   throw new Error('Failed to submit question');
-      // }
+      if (!response.ok) {
+        throw new Error('Failed to submit question');
+      }
 
       const result = await response.json();
       setQuestionId(result.data._id);
@@ -155,15 +163,21 @@ const AddQNA = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">Subject </label>
-            <input
-              type="text"
-              value={queData.subject}
-              onChange={(e) => setqueData(prev => ({...prev, subject: e.target.value}))}
-              className="w-full px-3 py-2 border rounded-md"
-              required
-            />
-          </div>
+      <label className="block text-sm font-medium mb-1">Subject</label>
+      <select
+        value={queData.subject}
+        onChange={(e) => setqueData((prev) => ({ ...prev, subject: e.target.value }))}
+        className="w-full px-3 py-2 border rounded-md"
+        required
+      >
+        <option value="">Select a subject</option>
+        {subjects.map((subj) => (
+          <option key={subj._id} value={subj._id}>
+            {subj.name}
+          </option>
+        ))}
+      </select>
+    </div>
 
           {/* Answer Option */}
      

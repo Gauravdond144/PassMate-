@@ -34,7 +34,7 @@ const Navbar = () => {
           <div className="hidden md:flex items-center space-x-4">
             <a href="/" className="hover:text-gray-300">Home</a>
             <Link to="/addqna" className="hover:text-gray-300">Add Question</Link>
-            <a href="/contact" className="hover:text-gray-300">Contact</a>
+            <a href="/" className="hover:text-gray-300">Contact</a>
           </div>
 
           {/* Mobile menu button */}
